@@ -1,0 +1,58 @@
+<html>
+<p>Enter your earning and expenses below as positive and negative numbers respectively</p> 
+<input id="text"></input>
+<button id="button">Enter</button>
+<p>earning: <span id="earning_total">0</span></p>
+<ul id="earning_list"></ul>
+<p>expenses: <span id="expenses_total">0</span></p>
+<ul id="expenses_list"></ul>
+<p>Balance: <span id="balance">0</span></p>
+<script>
+
+var cost, numbers, earning_total, expenses_total;
+
+function getNumberOrString(value) {
+  // Convert a string value to a number if possible
+  let number_value = Number(value);
+  if (Number.isNaN(number_value)) {
+    return value
+  } else {
+    return number_value
+  }
+}
+
+
+cost = [];
+earning_total = 0;
+expenses_total = 0;
+
+
+document.getElementById('button').addEventListener('click', (event) => {
+  numbers = getNumberOrString(document.getElementById('text').value);
+  cost.push(numbers);
+  let element_balance = document.getElementById('balance');
+  element_balance.innerText = cost.reduce((a,b) => a+b, 0);
+  if (numbers > 0) {
+    let element_earning_list = document.getElementById('earning_list');
+    let new_li = document.createElement('li');
+    new_li.innerText = numbers;
+
+    element_earning_list.appendChild(new_li);
+    earning_total = (typeof earning_total === 'number' ? earning_total : 0) + numbers;
+  } else {
+    let element_expenses_list = document.getElementById('expenses_list');
+    let new_li2 = document.createElement('li');
+    new_li2.innerText = numbers;
+
+    element_expenses_list.appendChild(new_li2);
+    expenses_total = (typeof expenses_total === 'number' ? expenses_total : 0) + numbers;
+  }
+  let element_earning_total = document.getElementById('earning_total');
+  element_earning_total.innerText = earning_total;
+  let element_expenses_total = document.getElementById('expenses_total');
+  element_expenses_total.innerText = expenses_total;
+
+});
+
+</script>
+</html>
